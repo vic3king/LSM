@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import routes from './routes/index';
 import db from './db/index';
 import middlewares from './middlewares';
+import seeds from './db/seeders/seed';
 
 // variables
 dotenv.config();
@@ -47,7 +48,12 @@ app.all('*', (req, res) => {
 });
 
 // connect to database server and start application server
-db.connect().then(() => {
+db.connect().then(async () => {
+  // seeds to be deleted before prod
+  await seeds.deleteSeeds();
+  await seeds.userCreateSeed();
+  await seeds.distributorCreateSeed();
+  await seeds.meterCreateSeed();
   if (process.env.NODE_ENV !== 'test') {
     // eslint-disable-next-line no-console
     app.listen(port, () => console.log(`Listening on port ${port}...`));
