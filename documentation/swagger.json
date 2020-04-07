@@ -8,7 +8,7 @@
       "email": "vic3coorpo@gmail.com"
     }
   },
-  "host": "localhost:3000",
+  "host": "lsm-hack-staging.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -20,7 +20,7 @@
       "description": "User authentication routes"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["https"],
   "paths": {
     "/": {
       "get": {

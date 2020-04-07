@@ -5,7 +5,7 @@ const indexRoute = express.Router();
 
 indexRoute.get('/', (req, res) => {
   res.status(200).json({
-    error: 'Welcome to LSM API (Version 1)',
+    message: 'Welcome to LSM API (Version 1)',
   });
 });
 
