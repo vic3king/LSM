@@ -6,7 +6,7 @@ LSM - an API for building a smart meter solution for lagos state government
 
 The full API documentation can be found by following the link below:
 
-\*\*coming soon
+[link](https://lsm-hack-staging.herokuapp.com/api/v1/docs/)
 
 ## Requirements and Installation
 
