@@ -7,7 +7,7 @@ import seeds from '../../server/db/seeders/seed';
 
 beforeAll(() => {
   // should clear and seed db where needed
-  seeds.usersDeleteSeed();
+  seeds.deleteSeeds();
   seeds.userCreateSeed();
 
   authHelper.decode = jest.fn(() => {
