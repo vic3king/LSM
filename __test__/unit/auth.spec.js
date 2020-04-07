@@ -66,7 +66,7 @@ describe('COMPARE PASSWORD', () => {
     } catch (e) {
       expect(e).toBe(false);
       expect(mockBcryptCompareSync).toHaveBeenCalled();
-      expect(mockBcryptCompareSync).toHaveBeenCalledTimes(2);
+      expect(mockBcryptCompareSync).toHaveBeenCalledTimes(1);
     }
   });
 });

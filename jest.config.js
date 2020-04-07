@@ -1,5 +1,6 @@
 module.exports = {
   collectCoverage: true,
+  clearMocks: true,
   coverageDirectory: 'coverage',
   testPathIgnorePatterns: ['/node_modules/'],
   collectCoverageFrom: [

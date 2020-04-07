@@ -1,6 +1,5 @@
 // packages
 import express from 'express';
-import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import compression from 'compression';
@@ -10,7 +9,6 @@ import bodyParser from 'body-parser';
 // local imports
 import routes from './routes/index';
 import db from './db/index';
-import swaggerSpec from '../documentation/swagger.json';
 import middlewares from './middlewares';
 
 // variables
@@ -32,20 +30,14 @@ app.use(compression()); // Compress all routes
 app.use(helmet()); // Security middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.status(200).json({
-    error: 'Welcome to LSM API (Version 1)',
-  });
-});
-
-app.get(`${baseUrl}/doc`, (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
-
 // Routes with base URl
 app.use(`${baseUrl}`, routes);
-app.use(`${baseUrl}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    error: 'Welcome to LSM API',
+  });
+});
 
 // catch invalid routes
 app.all('*', (req, res) => {
