@@ -1,16 +1,18 @@
 import Joi from '@hapi/joi';
 import joiFormatter from '../helpers/joi-formatter';
+import { verifyMeterNumber } from '../helpers/meter';
 import { authService } from '../services/authService';
 
 const registerValidation = async (req, res, next) => {
   const { body } = req;
-  const { email, password } = body;
+  const { email, meterId } = body;
 
   const schema = Joi.object({
     email: Joi.string()
       .email({ minDomainSegments: 2 })
       .required(),
     password: Joi.string().required(),
+    meterId: Joi.string().required(),
   });
 
   const { error } = schema.validate(body);
@@ -24,16 +26,25 @@ const registerValidation = async (req, res, next) => {
     });
   }
 
-  const user = await authService.create({ email, password });
+  const user = await authService.find({ email });
 
-  if (!user) {
-    return res.status(400).send({
+  if (user) {
+    return res.status(409).send({
       status: false,
-      error: 'error, while creating a user',
+      error: 'This user already exists',
     });
   }
 
-  req.user = user;
+  const verifyMeter = verifyMeterNumber(meterId);
+
+  if (!verifyMeter) {
+    return res.status(402).send({
+      status: false,
+      error: 'no distributor found for this meter number',
+    });
+  }
+
+  // req.user = user;
   return next();
 };
 
