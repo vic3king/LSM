@@ -4,11 +4,13 @@ import middlewares from '../middlewares';
 
 const authRoute = express.Router();
 
-const { loginMiddleware } = middlewares;
+const { loginMiddleware, registerMiddleware } = middlewares;
 
 const {
-  authController: { login },
+  authController: { login, register },
 } = controllers;
+
+authRoute.post('/register', registerMiddleware, register);
 
 authRoute.post('/login', loginMiddleware, login);
 
