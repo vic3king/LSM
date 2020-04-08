@@ -1,5 +1,4 @@
 import authHelper from '../helpers/auth';
-import { verifyMeterNumber } from '../helpers/meter';
 import authServices from '../services/authService';
 
 /**
@@ -14,36 +13,11 @@ export default class AuthController {
    * @returns {object} registered user
    */
   static async register(req, res) {
-    const { email, password, meterNumber } = req.body;
+    const { email, password, meterId } = req.body;
 
-    const hashPassword = authHelper.hashPassword(password);
+    const user = await authServices.create({ email, password, meterId });
 
-    if (!hashPassword) {
-      return res.status(401).send({
-        status: false,
-        error: 'error, while trying to hash password',
-      });
-    }
-
-    const user = await authServices.create({ email, password });
-
-    if (!user) {
-      return res.status(400).send({
-        status: false,
-        error: 'error while creating a user',
-      });
-    }
-
-    const verifyMeter = verifyMeterNumber(meterNumber);
-
-    if (!verifyMeter) {
-      return res.status(402).send({
-        status: false,
-        error: 'no distributor found for this meter number',
-      });
-    }
-
-    user.meters.push(meterNumber);
+    user.meters.push(meterId);
     user.save();
 
     return res.status(200).json({
@@ -63,17 +37,9 @@ export default class AuthController {
   static async login(req, res) {
     const { password } = req.body;
     const {
+      user,
       user: { _id, email, password: hashedPassword },
     } = req;
-
-    const userResult = await authServices.find({ email });
-
-    if (!userResult) {
-      return res.status(400).send({
-        status: false,
-        error: 'User does not exist',
-      });
-    }
 
     const verifiedPassword = authHelper.comparePassword(
       hashedPassword,
@@ -93,7 +59,7 @@ export default class AuthController {
       status: true,
       message: 'Login successful',
       token,
-      userResult,
+      user,
     });
   }
 }
