@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import mongoose from 'mongoose';
 import request from 'supertest';
 import app from '../../server/app';
@@ -209,8 +208,7 @@ describe('LOGIN', () => {
   });
 });
 
-// afterAll(async () => {
-//   // await seeds.deleteSeeds();
-//   jest.resetAllMocks();
-//   return mongoose.disconnect();
-// });
+afterAll(async () => {
+  jest.resetAllMocks();
+  return mongoose.disconnect();
+});
