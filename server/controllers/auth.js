@@ -1,8 +1,8 @@
+import randomstring from 'randomstring';
 import authHelper from '../helpers/auth';
 import { authService } from '../services/authService';
 import { meterService } from '../services/meterService';
 
-const randomstring = require('randomstring');
 /**
  * @class AuthController
  */
