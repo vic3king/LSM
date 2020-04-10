@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["EKEDC", "amazonaws", "middlewares", "thisisaninvalidroute"]
+  "cSpell.words": [
+    "EKEDC",
+    "SECRETKEY",
+    "amazonaws",
+    "distro",
+    "middlewares",
+    "randomstring",
+    "thisisaninvalidroute"
+  ]
 }

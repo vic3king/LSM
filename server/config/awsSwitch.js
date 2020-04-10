@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-// using Es5 here so I can run this from my terminal
+// using Es5 here so I can run this from the terminal
 const dotenv = require('dotenv');
 const awsIot = require('aws-iot-device-sdk');
 

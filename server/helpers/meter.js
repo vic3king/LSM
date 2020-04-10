@@ -5,11 +5,11 @@ const BEDC_MIN = 1000000001;
 const BEDC_MAX = 2000000000;
 
 // we don't need to generate a meter number right now as we don't have that interface, for registration any number between these ranges would work
-const generateMeterNumber = (min, max) => {
+export const generateMeterNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const verifyMeterNumber = meterNumber => {
+export const verifyMeterNumber = meterNumber => {
   if (meterNumber <= EKEDC_MAX) {
     return 'EKEDC';
   }
@@ -18,5 +18,3 @@ const verifyMeterNumber = meterNumber => {
     return 'BEDC';
   }
 };
-
-export default { generateMeterNumber, verifyMeterNumber };
