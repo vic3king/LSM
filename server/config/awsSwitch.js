@@ -1,38 +1,49 @@
 /* eslint-disable no-console */
-/* eslint-disable func-names */
+
+// using Es5 here so I can run this from my terminal
+const dotenv = require('dotenv');
 const awsIot = require('aws-iot-device-sdk');
 
+dotenv.config();
+
+const {
+  AWS_KEY_PATH,
+  AWS_CERT_PATH,
+  AWS_CA_PATH,
+  AWS_HOST,
+  AWS_CLIENT_ID,
+  AWS_REGION,
+} = process.env;
+
 const thingShadows = awsIot.thingShadow({
-  keyPath: '../../Downloads/156026429a-private.pem.key',
-  certPath: '../../Downloads/156026429a-certificate.pem.crt',
-  caPath: '../../Downloads/AmazonRootCA1.pem',
-  host: 'a1xfh88u91agm5-ats.iot.us-east-2.amazonaws.com',
-  clientId: 'Meter1',
-  region: 'us-east-2',
+  keyPath: AWS_KEY_PATH,
+  certPath: AWS_CERT_PATH,
+  caPath: AWS_CA_PATH,
+  host: AWS_HOST,
+  clientId: AWS_CLIENT_ID,
+  region: AWS_REGION,
 });
 
-//
-// Client token value returned from thingShadows.update() operation
-//
+// Client token value returned from thingShadows.update() operation when successful
 let clientTokenUpdate;
 
-thingShadows.on('connect', function() {
+thingShadows.on('connect', () => {
   //
   // After connecting to the AWS IoT platform, register interest in the
-  // Thing Shadow named 'RGBLedLamp'.
+  // Thing Shadow named 'USER_METER'.
   //
-  thingShadows.register('RGBLedLamp', {}, function() {
+  thingShadows.register('USER_METER', {}, () => {
     // Once registration is complete, update the Thing Shadow named
-    // 'RGBLedLamp' with the latest device state and save the clientToken
+    // 'USER_METER' with the latest device state and save the clientToken
     // so that we can correlate it with status or timeout events.
     //
     // Thing shadow state
     //
-    const rgbLedLampState = {
+    const userMeterState = {
       state: 'on',
     };
 
-    clientTokenUpdate = thingShadows.update('RGBLedLamp', rgbLedLampState);
+    clientTokenUpdate = thingShadows.update('USER_METER', userMeterState);
     //
     // The update method returns a clientToken; if non-null, this value will
     // be sent in a 'status' event when the operation completes, allowing you
