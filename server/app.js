@@ -35,7 +35,7 @@ app.use(`${baseUrl}`, routes);
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    error: 'Welcome to LSM API',
+    message: 'Welcome to LSM API',
   });
 });
 
