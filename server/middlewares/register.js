@@ -2,17 +2,23 @@ import Joi from '@hapi/joi';
 import joiFormatter from '../helpers/joi-formatter';
 import { verifyMeterNumber } from '../helpers/meter';
 import { authService } from '../services/authService';
+import { distributorService } from '../services/distributorService';
+import { meterService } from '../services/meterService';
 
 const registerValidation = async (req, res, next) => {
   const { body } = req;
-  const { email, meterId } = body;
+  const { email, meterNumber } = body;
 
   const schema = Joi.object({
     email: Joi.string()
       .email({ minDomainSegments: 2 })
       .required(),
-    password: Joi.string().required(),
-    meterId: Joi.string().required(),
+    password: Joi.string()
+      .required()
+      .pattern(/^[a-zA-Z0-9]{8,30}$/),
+    meterNumber: Joi.number()
+      .integer()
+      .required(),
   });
 
   const { error } = schema.validate(body);
@@ -26,25 +32,36 @@ const registerValidation = async (req, res, next) => {
     });
   }
 
+  const distro = verifyMeterNumber(meterNumber);
+
+  if (!distro) {
+    return res.status(404).send({
+      status: false,
+      error: 'No distributor found for this meter number',
+    });
+  }
+
   const user = await authService.find({ email });
 
   if (user) {
     return res.status(409).send({
       status: false,
-      error: 'This user already exists',
+      error: 'A user with this email already exists.',
     });
   }
 
-  const verifyMeter = verifyMeterNumber(meterId);
+  const meter = await meterService.find({ meterNumber });
 
-  if (!verifyMeter) {
-    return res.status(402).send({
+  if (meter) {
+    return res.status(409).send({
       status: false,
-      error: 'no distributor found for this meter number',
+      error: 'A user with this meter number already exists.',
     });
   }
 
-  // req.user = user;
+  const distributor = await distributorService.find({ name: distro });
+
+  req.distributor = distributor._id;
   return next();
 };
 

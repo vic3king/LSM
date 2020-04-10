@@ -34,6 +34,51 @@
         }
       }
     },
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "POST API endpoint for registering a new user",
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "email of the user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "users password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "meterNumber",
+            "in": "formData",
+            "description": "users unique meter ID",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Duplicate error"
+          },
+          "500": {
+            "description": "DB error"
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": ["Auth"],
