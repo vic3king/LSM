@@ -18,6 +18,11 @@ const meterSchema = new Schema(
       required: true,
       unique: true,
     },
+    state: {
+      type: String,
+      enum: ['ON', 'OFF'],
+      default: 'OFF',
+    },
   },
   {
     timestamps: true,

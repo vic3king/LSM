@@ -30,4 +30,17 @@ export default class BaseService {
     const found = this.model.findOne(missingObject);
     return found;
   }
+
+  /**
+   * @method update
+   * @param {*} whereObject
+   * @param {*} dataObject
+   * @returns {object} updated row
+   */
+  async findOneAndUpdate(whereObject, dataObject) {
+    const data = await this.model.findOneAndUpdate(whereObject, dataObject, {
+      new: true,
+    });
+    return data;
+  }
 }

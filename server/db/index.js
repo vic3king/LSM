@@ -16,6 +16,7 @@ const connect = () =>
           useNewUrlParser: true,
           useCreateIndex: true,
           useUnifiedTopology: true,
+          useFindAndModify: false,
         })
         .then((res, err) => {
           if (err) return reject(err);
@@ -27,6 +28,7 @@ const connect = () =>
           useNewUrlParser: true,
           useCreateIndex: true,
           useUnifiedTopology: true,
+          useFindAndModify: false,
         })
         .then((res, err) => {
           if (err) return reject(err);
