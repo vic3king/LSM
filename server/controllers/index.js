@@ -1,3 +1,4 @@
 import authController from './auth';
+import meterController from './meter';
 
-export default { authController };
+export default { authController, meterController };

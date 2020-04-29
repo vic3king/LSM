@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import compression from 'compression';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
+// import seeds from './db/seeders/seeds';
 
 // local imports
 import routes from './routes/index';
@@ -48,6 +49,12 @@ app.all('*', (req, res) => {
 
 // connect to database server and start application server
 db.connect().then(async () => {
+  // await seeds.distributorsDeleteSeed();
+  // await seeds.metersDeleteSeed();
+  // await seeds.usersDeleteSeed();
+  // await seeds.meterCreateSeed();
+  // await seeds.userCreateSeed();
+  // await seeds.distributorCreateSeed();
   if (!module.parent) {
     // eslint-disable-next-line no-console
     app.listen(PORT, () => console.log('Application listening in port ', PORT));
